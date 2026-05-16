@@ -6,7 +6,6 @@ import numpy as np
 
 
 def aug_random_mask(input_feature, drop_percent=0.4):
-    # input_feature = input_feature.detach()
     input_feature = torch.tensor(input_feature)
     node_num = input_feature.shape[1]
     mask_num = int(node_num * drop_percent)
@@ -16,7 +15,6 @@ def aug_random_mask(input_feature, drop_percent=0.4):
     mask_idx = random.sample(node_idx, mask_num)
 
     for i in range(input_feature.shape[0]):
-        # mask_idx = random.sample(node_idx, mask_num)
 
         for j in mask_idx:
             aug_feature[i][j] = zeros
@@ -26,7 +24,7 @@ def aug_random_mask(input_feature, drop_percent=0.4):
 def aug_random_edge(input_adj, drop_percent=0.4):
     percent = drop_percent
 
-    edge_num = len(input_adj)  # 9228 / 2
+    edge_num = len(input_adj)
     add_drop_num = int(edge_num * percent)
     edge_idx = [i for i in range(edge_num)]
     drop_idx = random.sample(edge_idx, add_drop_num)
@@ -42,7 +40,7 @@ def aug_drop_node(input_fea, input_adj, drop_percent=0.5):
     input_fea = input_fea.squeeze(0)
 
     node_num = input_fea.shape[0]
-    drop_num = int(node_num * drop_percent)  # number of drop nodes
+    drop_num = int(node_num * drop_percent)
     all_node_list = [i for i in range(node_num)]
 
     drop_node_list = sorted(random.sample(all_node_list, drop_num))
